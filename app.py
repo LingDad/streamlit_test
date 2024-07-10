@@ -6,19 +6,19 @@ import os
 st.title("Chat with Her!")
 
 with st.sidebar:
-    chat_model = st.selectbox("Her Model", ("LLAMA3", "gpt-3.5-turbo", "gpt-4", "gpt-4o"))
+    chat_model = st.selectbox("Her Model", ("llama3-8b", "gpt-3.5-turbo", "gpt-4", "gpt-4o"))
 
     if 'api_key' not in st.session_state:
         st.session_state['api_key'] = ''
 
-    if "LLAMA" in chat_model:
+    if "llama" in chat_model:
         api_key = st.text_input('Enter the Replicate API token', type='password')
         if not (api_key.startswith('r8_') and len(api_key)==40):
-            st.warning('Please enter your credentials', icon='⚠️')
+            st.warning('Please enter your replicate API token', icon='⚠️')
         else:
             st.session_state['api_key'] = api_key
             os.environ['REPLICATE_API_TOKEN'] = st.session_state['api_key']
-            st.success('Proceed to entering your prompt message!', icon='👉')
+            st.success('Chat with her, enjoy!', icon='👉')
 
     if "gpt" in chat_model:
         api_key = st.text_input('Enter the ChatGPT API Key', type='password')
@@ -27,7 +27,7 @@ with st.sidebar:
         else:
             st.session_state['api_key'] = api_key
             os.environ['OPENAI_API_KEY'] = st.session_state['api_key']
-            st.success('Proceed to entering your prompt message!', icon='👉')
+            st.success('Chat with her, enjoy!', icon='👉')
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
