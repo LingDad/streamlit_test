@@ -3,7 +3,7 @@ import replicate
 from openai import OpenAI
 import os
 
-st.title("Chat with Her!")
+st.title("Chat with Her! :robot_face:")
 
 with st.sidebar:
     chat_model = st.selectbox("Her Model", ("llama3-8b", "gpt-3.5-turbo", "gpt-4", "gpt-4o"))
@@ -59,7 +59,6 @@ if prompt := st.chat_input("What is your question?"):
             ):
                 if event.data is not None and event.data != '{}':
                     full_response += event.data
-                    print(event.data)
                     message_placeholder.markdown(full_response)
 
         # chat with openAI Chatgpt model
