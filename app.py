@@ -6,7 +6,7 @@ import os
 st.title("Chat with Her! :robot_face:")
 
 with st.sidebar:
-    st.header('You can chat with Ada without API keys :smile:')
+    st.header('Sometimes you can chat with llama without API keys :smile:')
     chat_model = st.selectbox("Her Model", ("llama3-8b", "gpt-3.5-turbo", "gpt-4", "gpt-4o"))
 
     if 'api_key' not in st.session_state:
