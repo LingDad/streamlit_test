@@ -9,7 +9,7 @@ st.title("Chat with Her! :robot_face:")
 
 with st.sidebar:
     st.header('Early bird can chat with llama without API keys :smile:')
-    chat_model = st.selectbox("Her Model", ("llama3-8b", "gpt-3.5-turbo", "gpt-4", "gpt-4o"))
+    chat_model = st.selectbox("Her Model", ("llama3-8b", "llama3-70b", "gpt-3.5-turbo", "gpt-4", "gpt-4o"))
 
     if 'api_key' not in st.session_state:
         st.session_state['api_key'] = ''
@@ -49,7 +49,7 @@ if prompt := st.chat_input("What is your question?"):
         full_response = ""
 
         # chat with LLAMA Model with replicate
-        if 'llama' in chat_model:
+        if 'llama3-8b' in chat_model:
             input = {
                 "prompt": prompt,
                 "max_new_tokens": 512,
@@ -58,6 +58,24 @@ if prompt := st.chat_input("What is your question?"):
 
             for event in replicate.stream(
                 "meta/meta-llama-3-8b-instruct",
+                input=input
+            ):
+                if event.data is not None and event.data != '{}':
+                    full_response += event.data
+                    message_placeholder.markdown(full_response)
+
+        if 'llama3-70b' in chat_model:
+            input = {
+                "top_p": 0.9,
+                "prompt": prompt,
+                "min_tokens": 0,
+                "temperature": 0.6,
+                "prompt_template": "<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\nYou are a helpful assistant<|eot_id|><|start_header_id|>user<|end_header_id|>\n\n{prompt}<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n\n",
+                "presence_penalty": 1.15
+            }
+
+            for event in replicate.stream(
+                "meta/meta-llama-3-70b-instruct",
                 input=input
             ):
                 if event.data is not None and event.data != '{}':
