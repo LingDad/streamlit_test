@@ -9,7 +9,7 @@ st.title("Chat with Her! :robot_face:")
 
 with st.sidebar:
     st.header('Early bird can chat with llama without API keys :smile:')
-    chat_model = st.selectbox("Her Model", ("llama3-8b", "llama3-70b", "gpt-3.5-turbo", "gpt-4", "gpt-4o"))
+    chat_model = st.selectbox("Her Model", ("gpt-4o-mini", "gpt-4", "gpt-4o", "llama3-8b", "llama3-70b"))
 
     if 'api_key' not in st.session_state:
         st.session_state['api_key'] = ''
